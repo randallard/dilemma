@@ -1,0 +1,81 @@
+# Prisoner's Dilemma Game Configuration
+# Classic game theory scenario - two prisoners must decide whether to cooperate or betray each other
+
+metadata:
+  id: prisoners-dilemma
+  name: "Prisoner's Dilemma"
+  description: "A classic game theory scenario where two players must choose to cooperate or betray each other"
+  version: "1.0.0"
+  rulesUrl: "https://en.wikipedia.org/wiki/Prisoner%27s_dilemma"
+  tags:
+    - game-theory
+    - classic
+    - strategy
+
+# Player choices
+choices:
+  - id: silent
+    label: "Stay Silent"
+    description: "Cooperate with the other player by staying silent"
+    icon: "🤐"
+
+  - id: talk
+    label: "Talk"
+    description: "Betray the other player by talking to the authorities"
+    icon: "🗣️"
+
+# Payoff matrix - defines outcomes for all choice combinations
+# Format: { player1: choice, player2: choice } -> { player1: points, player2: points }
+payoffRules:
+  # Both stay silent (mutual cooperation) - best collective outcome
+  - condition:
+      player1: silent
+      player2: silent
+    outcome:
+      player1: 3
+      player2: 3
+    outcomeText: "Both stayed silent. You both get reduced sentences!"
+
+  # Player 1 stays silent, Player 2 talks (P1 betrayed)
+  - condition:
+      player1: silent
+      player2: talk
+    outcome:
+      player1: 0
+      player2: 5
+    outcomeText: "You stayed silent, but they talked. You get the maximum sentence!"
+
+  # Player 1 talks, Player 2 stays silent (P2 betrayed)
+  - condition:
+      player1: talk
+      player2: silent
+    outcome:
+      player1: 5
+      player2: 0
+    outcomeText: "You talked while they stayed silent. You go free!"
+
+  # Both talk (mutual defection) - worst collective outcome
+  - condition:
+      player1: talk
+      player2: talk
+    outcome:
+      player1: 1
+      player2: 1
+    outcomeText: "Both talked. You both get harsh sentences."
+
+# Game progression settings
+progression:
+  totalRounds: 5
+  startingPlayer: 1
+  alternateStarter: true
+  showRunningTotal: true
+
+# UI customization
+ui:
+  primaryColor: "#3b82f6"
+  secondaryColor: "#8b5cf6"
+  cssClass: "prisoners-dilemma-theme"
+  showPayoffMatrix: true
+  showChoiceDescriptions: true
+  choiceMadeText: "Choice made! Waiting for other player..."
+  resultsHeaderText: "Round Results"
