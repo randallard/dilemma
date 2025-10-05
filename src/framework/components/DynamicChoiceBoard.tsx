@@ -10,7 +10,6 @@
  *
  * This enables the component to work with ANY game config:
  * - Prisoner's Dilemma: 2 choices (Silent, Talk)
- * - Rock Paper Scissors: 3 choices (Rock, Paper, Scissors)
  * - Custom games: N choices
  *
  * Pattern from existing code: src/features/game/components/ChoiceBoard.tsx
