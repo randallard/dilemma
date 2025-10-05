@@ -97,7 +97,6 @@ export function DynamicPayoffMatrix({
                 style={{
                   border: '1px solid #ccc',
                   padding: '0.5rem',
-                  backgroundColor: '#f5f5f5',
                 }}
               >
                 {/* Empty corner cell */}
@@ -108,7 +107,6 @@ export function DynamicPayoffMatrix({
                   style={{
                     border: '1px solid #ccc',
                     padding: '0.5rem',
-                    backgroundColor: '#f5f5f5',
                     fontWeight: 'bold',
                   }}
                 >
@@ -129,7 +127,6 @@ export function DynamicPayoffMatrix({
                     style={{
                       border: '1px solid #ccc',
                       padding: '0.5rem',
-                      backgroundColor: '#f5f5f5',
                       fontWeight: 'bold',
                       textAlign: 'left',
                     }}
