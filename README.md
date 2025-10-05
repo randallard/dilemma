@@ -2,6 +2,8 @@
 
 A URL-based Prisoner's Dilemma game built with the configurable correspondence games framework.
 
+Try it out at [Prisoner's Dilemma](https://randallard.github.io/dilemma/)
+
 ## Features
 
 - ✅ **Config-driven**: Powered by YAML configuration
