@@ -1,14 +1,14 @@
-# Rock Paper Scissors - Correspondence Game
+# Prisoner's Dilemma - Correspondence Game
 
-A URL-based Rock Paper Scissors game built with the configurable correspondence games framework.
+A URL-based Prisoner's Dilemma game built with the configurable correspondence games framework.
 
 ## Features
 
 - ✅ **Config-driven**: Powered by YAML configuration
 - ✅ **URL-based gameplay**: Share links to play asynchronously
 - ✅ **Framework components**: Uses DynamicChoiceBoard and DynamicPayoffMatrix
-- ✅ **3 rounds**: Quick games with running totals
-- ✅ **Zero-sum scoring**: Winner gets +1, loser gets -1, ties get 0
+- ✅ **5 rounds**: Classic iterated prisoner's dilemma
+- ✅ **Classic payoffs**: Temptation (5), Reward (3), Punishment (1), Sucker's payoff (0)
 
 ## Quick Start
 
@@ -22,41 +22,56 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:5174/rock-paper-scissors/`
+Open `http://localhost:5174/dilemma/`
 
 ### How to Play
 
-1. **Player 1** starts the game and makes their choice (Rock, Paper, or Scissors)
+1. **Player 1** starts the game and makes their choice (Stay Silent or Talk)
 2. Copy the URL and send it to **Player 2**
 3. **Player 2** opens the URL and makes their choice
 4. Results are revealed and totals are updated
-5. Repeat for 3 rounds
+5. Repeat for 5 rounds
 6. Winner is determined by highest total score
 
 ## Game Configuration
 
-The game is defined in `games/configs/rock-paper-scissors.yaml`:
+The game is defined in `games/configs/prisoners-dilemma.yaml`:
 
 ```yaml
 metadata:
-  id: rock-paper-scissors
-  name: "Rock Paper Scissors"
+  id: prisoners-dilemma
+  name: "Prisoner's Dilemma"
   version: "1.0.0"
 
 choices:
-  - id: rock
-    label: "Rock"
-    icon: "🪨"
-  - id: paper
-    label: "Paper"
-    icon: "📄"
-  - id: scissors
-    label: "Scissors"
-    icon: "✂️"
+  - id: silent
+    label: "Stay Silent"
+    description: "Cooperate with the other player by staying silent"
+    icon: "🤐"
 
-# 9 payoff rules (3×3 combinations)
-# Rock beats scissors, scissors beats paper, paper beats rock
+  - id: talk
+    label: "Talk"
+    description: "Betray the other player by talking to the authorities"
+    icon: "🗣️"
+
+# 4 payoff rules (2×2 combinations)
+# Classic prisoner's dilemma payoffs:
+# Both silent: (3, 3) - Reward for mutual cooperation
+# Silent/Talk: (0, 5) - Sucker's payoff / Temptation to defect
+# Talk/Silent: (5, 0) - Temptation to defect / Sucker's payoff
+# Both talk: (1, 1) - Punishment for mutual defection
 ```
+
+## Game Theory
+
+The Prisoner's Dilemma is a classic game theory scenario that demonstrates why rational individuals might not cooperate, even when cooperation benefits both.
+
+**Payoff Structure:**
+- **Both Stay Silent (3, 3)**: Best collective outcome - moderate sentences
+- **Both Talk (1, 1)**: Worst collective outcome - harsh sentences
+- **One Talks, One Silent (5, 0)**: Betrayer goes free (5), silent one gets maximum sentence (0)
+
+**The Dilemma**: Talking is always better individually (dominant strategy), but both talking is worse than both staying silent!
 
 ## Framework Components Used
 
@@ -74,12 +89,12 @@ Displays payoff outcomes:
 
 ### Game Engines
 - **PayoffEngine**: Calculates scores from config rules
-- **TurnEngine**: Manages round progression
+- **TurnEngine**: Manages round progression and alternation
 
 ## Project Structure
 
 ```
-rock-paper-scissors/
+dilemma/
 ├── src/
 │   ├── App.tsx                 # Main game logic
 │   ├── main.tsx                # React entry point
@@ -96,7 +111,7 @@ rock-paper-scissors/
 │           └── constants.ts    # Game secret
 │
 ├── games/configs/
-│   └── rock-paper-scissors.yaml
+│   └── prisoners-dilemma.yaml
 │
 ├── package.json
 ├── vite.config.ts
@@ -140,33 +155,33 @@ This will:
    git subtree push --prefix dist origin gh-pages
    ```
 
-**Note**: The `vite.config.ts` is already configured with the correct base path: `/rock-paper-scissors/`
+**Note**: The `vite.config.ts` is already configured with the correct base path: `/dilemma/`
 
 ## Customization
 
 ### Change Number of Rounds
 
-Edit `games/configs/rock-paper-scissors.yaml`:
+Edit `games/configs/prisoners-dilemma.yaml`:
 
 ```yaml
 progression:
-  totalRounds: 5  # Change to any number
+  totalRounds: 10  # Change to any number
 ```
 
-### Add New Choices
+### Modify Payoffs
 
-To create Rock-Paper-Scissors-Lizard-Spock:
+To adjust the payoff values (e.g., make cooperation more rewarding):
 
-1. Add new choices to `choices` array
-2. Add all payoff rules (5×5 = 25 combinations)
+1. Edit the `payoffRules` section in the YAML config
+2. Adjust the `outcome` values for each scenario
 3. Framework handles the rest automatically!
 
 ### Theme Colors
 
 ```yaml
 ui:
-  primaryColor: "#ef4444"      # Red theme
-  secondaryColor: "#f59e0b"    # Orange accent
+  primaryColor: "#3b82f6"      # Blue theme
+  secondaryColor: "#8b5cf6"    # Purple accent
 ```
 
 ## Architecture
@@ -178,9 +193,17 @@ This game demonstrates the configurable framework's capabilities:
 - **Type-safe** - Zod validation at runtime
 - **Reusable** - same components work for any game
 
+## Strategy Tips
+
+In iterated prisoner's dilemma (multiple rounds):
+- **Tit-for-Tat**: Start silent, then copy opponent's last move
+- **Always Defect**: Always talk (dominant strategy in single round)
+- **Always Cooperate**: Always stay silent (risky but builds trust)
+- **Forgiving Tit-for-Tat**: Occasionally forgive betrayals
+
 ## Related Games
 
-- [Prisoner's Dilemma](../prisoners-dilemma/) - 2 choices, 5 rounds
+- [Rock Paper Scissors](../rock-paper-scissors/) - 3 choices, 3 rounds
 - Create your own game using this framework!
 
 ## License
